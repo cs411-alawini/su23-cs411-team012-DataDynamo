@@ -5,7 +5,7 @@
 |   Info      |       Description      | 
 | ----------- | ---------------------- |
 | TeamID      |        Team-012        |
-| TeamName    |       Data Dynamo      |
+| TeamName    |       DataDynamo      |
 | Captain     |     Pranav Kommaraju   |
 | Captain     |    pvk4@illinois.edu   |
 | Member1     |      Roshan Mahesh     |
