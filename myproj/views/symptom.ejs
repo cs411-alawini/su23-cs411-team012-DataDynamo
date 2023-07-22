@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Symptom Tracker</title>
+    <link rel="stylesheet" href="symptom.css">
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #8AAAE5;
+  color: #FFFFFF;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.update {
+  display: flex;
+  align-items: center;
+}
+
+.delete {
+  display: flex;
+  align-items: center;
+}
+
+.symptom-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.symptom-form label {
+  margin-bottom: 10px;
+}
+
+#checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  color:#000000;
+}
+
+.symptom-form button {
+  margin-top: 10px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 10px;
+  background-color: #8AAAE5;
+  color: #FFFFFF;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+
+</style>
+
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+          <form action="updating" method="get">
+            <div class="update">
+                <button type="submit" name="update_profile">Update Profile</button>
+            </div>
+          </form>
+          <form action="deleting" method="get">
+            <div class="delete">
+                <button type="submit" name="delete_profile">Delete Profile</button>
+            </div>
+          </form>
+        </div>
+      <form action="reading" method="post">  
+        <div class="symptom-form">
+            <input type="text" id="symptomInput" placeholder="Enter symptom" name="symptomInput">
+            <div id="checkbox-container" class="checkbox-container">
+                <input type="checkbox" id="conditionCheckbox" name="conditionCheckbox">
+                <label for="conditionCheckbox">Condition</label>
+                <input type="checkbox" id="treatmentCheckbox" name="treatmentCheckbox">
+                <label for="treatmentCheckbox">Treatment</label>
+            </div>
+            <button type="submit" name="results">Submit</button>
+        </div>
+      </form>
+    </div>
+</body>
+</html>

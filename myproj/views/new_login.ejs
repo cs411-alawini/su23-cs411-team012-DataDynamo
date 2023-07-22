@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <link rel="stylesheet" type="text/css" href="/home/myproj/public/stylesheets/style.css">
+
+<style>
+body {
+  background-color: #8AAAE5;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  text-align: center;
+}
+
+h1 {
+  color: #8AAAE5;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 380px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #8AAAE5;
+  border-radius: 10px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #8AAAE5;
+  color: #FFFFFF;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-submit {
+  background-color: #8AAAE5;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+    <form action="creating" method="post">
+      <input type="text" placeholder="User ID" id="user_id" name="user_id" required>
+      <input type="number" placeholder="Age" id="age" name="age" required>
+      <input type="text" placeholder="Sex" id="sex" name="sex" required>
+      <button type="submit" class="btn btn-submit">Submit</button>
+    </form>
+  </div>
+</html>

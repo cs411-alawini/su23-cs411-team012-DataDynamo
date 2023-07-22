@@ -1,0 +1,35 @@
+<!DOCUTYPE html>
+<html>
+<head>
+ <title>Display</title>
+</head>
+<body>
+	 <h1>DISPLAY DATA</h1>
+	<table>
+	<tr>
+	<th>Treatment Name</th>
+	<th>Treatment Count</th>
+        <th>Condition Name</th>
+        <th>Condition Count</th>
+	</tr>
+
+	     <% 
+	     if(data.length > 0){
+		data.forEach(function(result){
+	     %>
+	     <tr>				
+	     <td><%=result.treatments %></td>
+	     <td><%=result.treatmentCount %></td>
+	     <td><%=result.conditions %></td>
+	     <td><%=result.conditionCount %></td> 
+	     <tr>	
+	     <%
+		});
+	     }
+	     %>	
+	</table>
+   <form action="go_back" method="get">
+    <button type="submit" class= "btn btn-submit" id="go_back" name="go_back"> Go back</button>
+   </form>
+</body>
+</html>
