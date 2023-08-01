@@ -1,3 +1,4 @@
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var mysql = require('mysql2');
@@ -55,8 +56,13 @@ app.get('/symptom', function(req, res) {
 });
 
 /* for deleting, then redirects back to first page */
-app.get('/deleting', function(req, res) {
-  var sql = `DELETE FROM Users WHERE user_id = '${userid}'`;
+app.post('/deleting', function(req, res) {
+
+  var symptom = req.body.symptomDeleteInput;
+  var date = req.body.checkindateDeleteInput;
+  var value = req.body.severityDeleteInput;
+
+  var sql = `DELETE FROM CheckIns WHERE user_id = '${userid}' AND  checkin_date  = '${date}' AND symptom = '${symptom}' AND severity = '${value}'`;
 
   console.log(sql);
   connection.query(sql, function(err, result) {
@@ -64,8 +70,7 @@ app.get('/deleting', function(req, res) {
       res.send(err);
       return;
     }
-
-    res.redirect('/');
+     res.redirect('/symptom');
   });
 });
 
@@ -100,9 +105,31 @@ app.post('/reading', function(req, res) {
   console.log(treatmentCheck);
 
   var symptom = req.body.symptomInput; //should contain a string
-  console.log(symptom);
-  var sql;
+  var severity = req.body.severityInput;
 
+  var symptom_two = req.body.symptomInputTwo; //should contain a string
+  var severity_two = req.body.severityInputTwo;
+
+  var symptom_three = req.body.symptomInputThree; //should contain a string
+  var severity_three = req.body.severityInputThree;
+
+  var symptom_four = req.body.symptomInputFour; //should contain a string
+  var severity_four = req.body.severityInputFour;
+
+  var symptom_five = req.body.symptomInputFive; //should contain a string
+  var severity_five = req.body.severityInputFive;
+
+  var sql = `CALL readSP(?,?,?,?,?,?,?,?,?,?,?,?)`;
+  var insertSql = `INSERT INTO CheckIns(user_id, checkin_date, symptom, severity, feedback) VALUES ('${userid}', 'Check', 'Check', 3, 'NULL')`;
+ 
+if (conditionCheck == 'on') {
+ var finalsql = `SELECT TreatmentName as conditions, TreatmentCount as conditionCount FROM finaltable ORDER BY conditionCount DESC;`
+}
+else{
+var finalsql = `SELECT TreatmentName as treatments, TreatmentCount as treatmentCount FROM finaltable ORDER BY TreatmentCount DESC;`
+}
+
+/*
   if (conditionCheck == 'on') {
     //adv query 2
     sql = `SELECT c.trackable_name as conditions,COUNT(c.trackable_name) as conditionCount FROM 
@@ -112,34 +139,48 @@ app.post('/reading', function(req, res) {
   } else if (treatmentCheck == 'on') {
     //adv query 1
 /*
-    sql = `SELECT t.trackable_name as treatments, COUNT(t.trackable_name) as treatmentCount FROM 
+  remember to comment this ->  sql = `SELECT t.trackable_name as treatments, COUNT(t.trackable_name) as treatmentCount FROM 
     Treatments t WHERE t.user_id IN(SELECT s.user_id FROM Symptoms s JOIN Conditions c ON 
     s.user_id = c.user_id WHERE (s.trackable_name = 'Headache' OR c.trackable_name = 'Headache')) 
     GROUP BY treatments ORDER BY treatmentCount DESC LIMIT 15`;
-*/
+
    sql = `SELECT t.trackable_name as treatments, COUNT(t.trackable_name) as treatmentCount FROM Treatments t WHERE t.user_id IN(SELECT 
    DISTINCT s.user_id FROM Symptoms s JOIN Conditions c USING (user_id) WHERE 
    s.trackable_name = 'Headache' OR c.trackable_name = 'Headache') GROUP BY treatments ORDER BY treatmentCount DESC LIMIT 15`;
   } else{
     //rest of queries
     sql = `SELECT t.trackable_name as treatments, COUNT(t.trackable_name) as treatmentCount FROM 
-    Treatments t WHERE t.user_id IN(SELECT s.user_id FROM Symptoms s WHERE 
-    (s.trackable_name = '${symptom}')) GROUP BY treatments ORDER BY treatmentCount DESC LIMIT 15`;
+    Treatments t WHERE t.user_id IN (SELECT s.user_id FROM Symptoms s WHERE 
+    (s.trackable_name = '${symptom}' AND s.trackable_value = ${severity}) OR (s.trackable_name = '${symptom_two}' AND s.trackable_value = ${severity_two}) OR (s.trackable_name = '${symptom_three}' AND s.trackable_value = ${severity_three}) OR
+    (s.trackable_name = '${symptom_four}' AND s.trackable_value = ${severity_four}) OR (s.trackable_name = '${symptom_five}' AND s.trackable_value = ${severity_five})) GROUP BY treatments ORDER BY treatmentCount DESC LIMIT 15`;
   }
+*/
+  connection.query(insertSql, function(err, result) {
+    if (err) {
+      res.send(err);
+      return;
+    }
+  });
 
-  console.log(sql);
-  connection.query(sql, function(err, result) {
+  connection.query(sql,[conditionCheck, treatmentCheck, symptom, severity, symptom_two, severity_two, symptom_three, severity_three, symptom_four, severity_four, symptom_five, severity_five], function(err, result) {
+    if (err) {
+      res.send(err);
+      return;
+    }
+    console.log(result);
+  });
+
+ connection.query(finalsql, function(err, result) {
     if (err) {
       res.send(err);
       return;
     }
     else {
-	res.render('display', {data:result});
+        res.render('display', {data:result});
     }
     console.log(result);
   });
 
-  
 });
 
 app.get('/go_back', function(req, res) {

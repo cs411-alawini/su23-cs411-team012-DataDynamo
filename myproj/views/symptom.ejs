@@ -4,6 +4,7 @@
     <title>Symptom Tracker</title>
     <link rel="stylesheet" href="symptom.css">
 <style>
+
 body {
   font-family: Arial, sans-serif;
   background-color: #8AAAE5;
@@ -13,12 +14,13 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  max-width: 650px;
   margin: 50px auto;
   padding: 20px;
   background-color: #FFFFFF;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align:center;
 }
 
 .header {
@@ -75,9 +77,14 @@ body {
 
 
 
+
+input[type="text"],
+input[type="number"] {
+  width: 300px;
+}
+
+
 </style>
-
-
 
 </head>
 <body>
@@ -93,13 +100,43 @@ body {
                 <button type="submit" name="delete_profile">Delete Profile</button>
             </div>
           </form>
-        </div>
-      <form action="reading" method="post">  
-        <div class="symptom-form">
-            <input type="text" id="symptomInput" placeholder="Enter symptom" name="symptomInput">
-            <div id="checkbox-container" class="checkbox-container">
+        </div> 	
+
+      <form action="reading" method="post">
+        <div class="symptom-form">			 
+	
+         <span>
+   		 <input type="text" value = "example" id="symptomInput" placeholder="Enter symptom" name="symptomInput">
+   		 <input type="number" value = "0" min = "0" max = "4" placeholder="Enter Severity Score from 0-4" id="severityInput" name="severityInput">
+	</span>
+	<br>
+	<span>
+    		<input type="text" value="example" id="symptomInputTwo" placeholder="Enter symptom 2" name="symptomInputTwo">
+    		<input type="number" value="0" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputTwo" name="severityInputTwo" >
+	</span>
+	<br>
+	<span>
+    		<input type="text" value="example" id="symptomInputThree" placeholder="Enter symptom 3" name="symptomInputThree" >
+    		<input type="number" value="0" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputThree" name="severityInputThree" >
+	</span>
+	<br>
+	<span>
+    		<input type="text" value="example" id="symptomInputFour" placeholder="Enter symptom 4" name="symptomInputFour" >
+    		<input type="number" value="0" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputFour" name="severityInputFour" >
+	</span>
+	<br>
+	<span>
+   		 <input type="text" value="example" id="symptomInputFive" placeholder="Enter symptom 5" name="symptomInputFive" >
+   		 <input type="number" value="0" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputFive" name="severityInputFive" >
+	</span>
+	 <br>
+	 <input style="align-items:center;" type="text" id="checkinDateInput" placeholder="Enter Date in this format: xx-xx-xxxx" name="checkinDateInput" >
+         <br>
+   	 <br> 	
+             <div id="checkbox-container" class="checkbox-container">
                 <input type="checkbox" id="conditionCheckbox" name="conditionCheckbox">
                 <label for="conditionCheckbox">Condition</label>
+		<br>
                 <input type="checkbox" id="treatmentCheckbox" name="treatmentCheckbox">
                 <label for="treatmentCheckbox">Treatment</label>
             </div>
@@ -107,5 +144,17 @@ body {
         </div>
       </form>
     </div>
+    <div class="container">
+    <form action="deleting" method="post">
+     <span>
+                 <input type="text" id="symptomDeleteInput" placeholder="Enter symptom to delete" name="symptomDeleteInput" required>
+                 <input type="text" placeholder="Enter Check-in Date for deletion in this format: xx-xx-xxxx" id="checkindateDeleteInput" name="checkindateDeleteInput" required>
+		<input style="align-items:center;"  type="number" min="0" max="4" placeholder="Enter Severity value for deletion" id="severityDeleteInput" name="severityDeleteInput" required>
+		 <div class="delete">
+       			 <button type="submit" name="delete_Checkin">Delete Checkin</button>
+      		</div>
+     </span>	
+    </form>
+   </div>	
 </body>
 </html>
