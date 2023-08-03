@@ -2,23 +2,41 @@
 <html>
 <head>
     <title>Symptom Tracker</title>
-    <h1 style="text-align:center; font-size: 48px; font-weight: bold;">Mediguide: Treatment Recommender</h1>	
+    <h1>Mediguide: Treatment Recommender</h1>
     <link rel="stylesheet" href="symptom.css">
 <style>
 
 body {
   font-family: Verdana, sans-serif;
-  background-color: #8AAAE5;		
+  background-color: #8AAAE5;            
+}
+
+h1 {
+    font-size: 48px;
+    text-transform: uppercase;
+    font-family: 'Gambetta', serif;
+    letter-spacing: -3px;
+    transition: 700ms ease;
+    font-variation-settings: "wght" 311;
+    margin-bottom: 0.8rem;
+    color: PaleGoldenRod;
+    outline: none;
+    text-align: center;
+}
+
+h1:hover {
+    font-variation-settings: "wght" 582;
+    letter-spacing: 1px;
 }
 
 .container {
-  max-width: 650px;
+  max-width: 670px;
   margin: 50px auto;
   padding: 20px;
   background-color: #FFFFFF;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  text-align:center;
+  text-align:left;
   justify-content:center;
 }
 
@@ -29,24 +47,25 @@ body {
 }
 
 .button {
-    display: inline-block;
-    outline: 0;
-    cursor: pointer;
-    text-align: center;
-    border: 0;
-    padding: 7px 16px;
-    min-height: 36px;
-    min-width: 36px;
-    color: #ffffff;
-    background: #008060;
-    border-radius: 4px;
-    font-weight: 500;
-    font-size: 14px;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  display: inline-block;
+  font: normal normal 300 1.3em 'Open Sans';
+  text-decoration: none;
+  color: rgba(28, 190, 131, 1);
+  background-color: transparent;
+  border: 1px solid rgba(28, 190, 131, 1);
+  border-radius: 100px;
+  padding: 0.3em 1.2em;
+  margin: 5px;
+  background-size: 200% 100%;
+  background-image: linear-gradient(to right, transparent 50%, rgba(28, 190, 131, 1) 50%);
+  transition: background-position .3s cubic-bezier(0.19, 1, 0.22, 1) .1s, color .5s ease 0s, background-color .5s ease;
+  cursor: pointer;
 }
 
 .button:hover {
-    background: #006e52;
+  color: rgba(255, 255, 255, 1);
+  background-color: rgba(28, 190, 131, 1);
+  background-position: -100% 100%;
 }
 
 .update {
@@ -69,17 +88,109 @@ body {
   margin-bottom: 10px;
 }
 
-#checkbox-container {
-  display: flex;
-  align-items: center;
-  margin: auto
-  color:#000000;
+.checkbox-rect input[type="checkbox"] {
+  display: none;
 }
-
+.checkbox-rect input[type="checkbox"] + label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-right: 100px;
+  margin-bottom: 20px;
+  font: 24px Verdana, sans-serif;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+.checkbox-rect input[type="checkbox"]:hover + label:hover {
+  color: rgb(23, 86, 228);
+}
+.checkbox-rect input[type="checkbox"]:hover + label:before { 
+  border: 1px solid #343a3f;
+  box-shadow: 2px 1px 0 #343a3f;
+}
+.checkbox-rect input[type="checkbox"] + label:last-child {
+  margin-bottom: 0;
+}
+.checkbox-rect input[type="checkbox"] + label:before {
+  content: "";
+  display: block;
+  width: 1.4em;
+  height: 1.4em;
+  border: 1px solid #343a3f;
+  border-radius: 0.2em;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-right: 10px;
+  -webkit-transition: all 0.2s, background 0.2s ease-in-out;
+  transition: all 0.2s, background 0.2s ease-in-out;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: -2px -1px 0 #343a3f;
+  background: #f3f3f3;
+}
+.checkbox-rect input[type="checkbox"]:checked + label:before {
+  border: 2px solid #fff;
+  border-radius: 0.3em;
+  background: #50565a;
+  box-shadow: 2px 1px 0 #50565a;
+}
 
 input[type="text"],
 input[type="number"] {
-  width: 300px;
+  width: 620px;
+  position:relative;
+  font-size: 1.5em;
+  background: linear-gradient(21deg, #bbe4e9, #79c2d0);
+  padding: 10px;
+  display: inline-block;
+  border-radius: 9999em;
+  border: 5px solid #000;
+}
+
+input[type="text"]:not(span),
+input[type="number"]:not(span) {
+  position: relative;
+  display: inherit;
+  border-radius: inherit;
+  margin: 0;
+  border: none;
+  outline: none;
+  padding: 0 .325em;
+  z-index: 1;
+}
+
+input[type="text"]:focus + span,
+input[type="number"]:focus + span {
+  opacity: 1;
+  transform: scale(1);
+}
+
+input[type="text"] + span,
+input[type="number"] + span {
+  transform: scale(.993, .94);
+  transition: transform .5s, opacity .25s;
+  opacity: 0;
+  position: absolute;
+  z-index: 0;
+  margin: 4px;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 3px #fff,
+    0 0 0 4px #fff,
+    3px -3px 30px #1beabd, 
+    -3px 3px 30px #10abff;
+}
+
+input[type="text"]:-webkit-autofill,
+input[type="number"]:-webkit-autofill {
+  background: linear-gradient(21deg, #bbe4e9, #79c2d0) !important;
+  -webkit-box-shadow: 0 0 0px 1000px #bbe4e9 inset !important;
 }
 
 
@@ -91,78 +202,82 @@ input[type="number"] {
         <div class="header">
           <form action="updating" method="get">
             <div class="update">
-                <button type="submit" name="update_profile">Update Profile</button>
+                <button type="submit" name="update_profile" class="button">Update Profile</button>
             </div>
           </form>
-        </div>	
+	  <div class="symptom-form">
+	  <input style="align-items:right; width: 122px; color: #113f67;" type="text" id="checkinDateInput" name="checkinDateInput" required readonly>
+            <script>
+	        const checkinDateInput = document.getElementById("checkinDateInput");
+	        const currentDate = new Date();
+	        const day = String(currentDate.getDate()).padStart(2, "0");
+	        const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+	        const year = currentDate.getFullYear();
+	        checkinDateInput.value = `${month}-${day}-${year}`;
+           </script>
+        </div>
+	</div>  
 
-      <form action="reading" method="post">
-        <div class="symptom-form">			 
-	
-         <span>
-		 <input type="text" id="symptomInput" placeholder="Enter symptom" name="symptomInput">
-		 <input type="number" min = "0" max = "4" placeholder="Enter Severity Score from 0-4" id="severityInput" name="severityInput">
-	</span>
-	<br>
-	<span>
-		<input type="text" id="symptomInputTwo" placeholder="Enter symptom 2" name="symptomInputTwo">
-		<input type="number"  min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputTwo" name="severityInputTwo" >
-	</span>
-	<br>
-	<span>
-		<input type="text" id="symptomInputThree" placeholder="Enter symptom 3" name="symptomInputThree" >
-		<input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputThree" name="severityInputThree" >
-	</span>
-	<br>
-	<span>
-		<input type="text" id="symptomInputFour" placeholder="Enter symptom 4" name="symptomInputFour" >
-		<input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputFour" name="severityInputFour" >
-	</span>
-	<br>
-	<span>
-		 <input type="text" id="symptomInputFive" placeholder="Enter symptom 5" name="symptomInputFive" >
-		 <input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputFive" name="severityInputFive" >
-	</span>
-	 <br>
-	 <input style="align-items:center;" type="text" id="checkinDateInput" name="checkinDateInput" required readonly>
-	<script>
-	const checkinDateInput = document.getElementById("checkinDateInput");
-	const currentDate = new Date();
-	const day = String(currentDate.getDate()).padStart(2, "0");
-	const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-	const year = currentDate.getFullYear();
-	checkinDateInput.value = `${month}-${day}-${year}`;
-	</script>
- 
-	<br>
-	 <br>	
+        <form action="reading" method="post">
+            <div class="symptom-form">
+        
+             <span>
+                     <input type="text" id="symptomInput" placeholder="Enter symptom" name="symptomInput" style="background: linear-gradient(21deg, #bbe4e9, #79c2d0);">
+                     <input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInput" name="severityInput">
+            </span>
+            <br>
+            <span>
+                    <input type="text" id="symptomInputTwo" placeholder="Enter symptom 2" name="symptomInputTwo" style="background: linear-gradient(21deg, #bbe4e9, #79c2d0);">
+                    <input type="number"  min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputTwo" name="severityInputTwo" >
+            </span>
+            <br>
+            <span>
+                    <input type="text" id="symptomInputThree" placeholder="Enter symptom 3" name="symptomInputThree" style="background: linear-gradient(21deg, #bbe4e9, #79c2d0);">
+                    <input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputThree" name="severityInputThree" >
+            </span>
+            <br>
+            <span>
+                    <input type="text" id="symptomInputFour" placeholder="Enter symptom 4" name="symptomInputFour" style="background: linear-gradient(21deg, #bbe4e9, #79c2d0);">
+                    <input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputFour" name="severityInputFour" >
+            </span>
+            <br>
+            <span>
+                     <input type="text" id="symptomInputFive" placeholder="Enter symptom 5" name="symptomInputFive" style="background: linear-gradient(21deg, #bbe4e9, #79c2d0);">
+                     <input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputFive" name="severityInputFive" >
+            </span>
+            <br> 
+	    <button style="text-align: center;" type="submit" name="results" class="button">Submit</button>  
+	    <br>
+                </div>
             </div>
-        </div>
-     
-    </div>
-    <div class = "container">
-        <div id="checkbox-container" class="checkbox-container">
-                <input style="align-items:center;" type="checkbox" id="conditionCheckbox" name="conditionCheckbox">
-                <label for="conditionCheckbox">Conditions for Nausea and Fatigue</label>
-                <br>
-                <input style="align-items:center;" type="checkbox" id="treatmentCheckbox" name="treatmentCheckbox">
-                <label for="treatmentCheckbox">Treatments for Headache</label>
-        </div>
-            <button style="align-items:center;" type="submit" name="results">Submit</button>
 
-    </div>
-    </form>
-    <div class="container">
-    <form action="deleting" method="post">
-     <span>
-                 <input type="text" id="symptomDeleteInput" placeholder="Enter symptom to delete" name="symptomDeleteInput" required>
-                 <input type="text" placeholder="Enter Check-in Date for deletion in this format: xx-xx-xxxx" id="checkindateDeleteInput" name="checkindateDeleteInput" required>
-		<input style="align-items:center;"  type="number" min="0" max="4" placeholder="Enter Severity value for deletion" id="severityDeleteInput" name="severityDeleteInput" required>
-		 <div class="delete">
-			 <button type="submit" name="delete_Checkin">Delete Checkin</button>
+        </div>
+        <div class="container">
+		<h2 style="font-size: 36px; font-weight: bold;">Examples</h2>
+		<div id="checkbox-rect" class="checkbox-rect">
+			<input style="align-items:center;" type="checkbox" id="conditionCheckbox" name="conditionCheckbox">
+			<label for="conditionCheckbox">Conditions for Nausea and Fatigue</label>
+			<br>
+			<input style="align-items:center;" type="checkbox" id="treatmentCheckbox" name="treatmentCheckbox">
+			<label for="treatmentCheckbox">Treatments for Headache</label>
 		</div>
-     </span>	
-    </form>
-   </div>	
-</body>
-</html>
+		<br>
+		<button style="text-align: center;" type="submit" name="results" class="button">Submit</button>
+	</div>
+
+        </form>
+        <div class="container">
+        <form action="deleting" method="post">
+         <span>
+                     <input type="text" id="symptomDeleteInput" placeholder="Enter symptom to delete" name="symptomDeleteInput" required>
+                     <input type="text" placeholder="Enter Check-in Date for deletion in this format: xx-xx-xxxx" id="checkindateDeleteInput" name="checkindateDeleteInput" required>
+                     <input style="align-items:center;"  type="number" min="0" max="4" placeholder="Enter Severity value for deletion" id="severityDeleteInput" name="severityDeleteInput" required>
+                     <div class="delete">
+                             <button type="submit" name="delete_Checkin" class="button">Delete Checkin</button>
+                    </div>
+         </span>    
+        </form>
+       </div>       
+    </body>
+    </html>
+
