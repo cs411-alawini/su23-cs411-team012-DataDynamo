@@ -169,29 +169,36 @@ app.post('/reading', function(req, res) {
 console.log(symptom_two);
 console.log(symptom_three);
 if (conditionCheck != 'on' && treatmentCheck != 'on') {
-	var sql = `SELECT t.trackable_name as treatments, COUNT(t.trackable_name) as treatmentCount FROM Treatments t WHERE t.user_id IN (SELECT s.user_id FROM Symptoms s WHERE (s.trackable_name = '${symptom}' AND s.trackable_value = ${severity}) `;
+	var treatmentsql = `SELECT t.trackable_name as treatments, COUNT(t.trackable_name) as treatmentCount FROM Treatments t WHERE t.user_id IN (SELECT s.user_id FROM Symptoms s WHERE (s.trackable_name = '${symptom}' AND s.trackable_value = ${severity}) `;
+	var conditionsql = `SELECT c.trackable_name as conditions, COUNT(c.trackable_name) as conditionCount FROM Conditions c WHERE c.user_id IN (SELECT s.user_id FROM Symptoms s WHERE (s.trackable_name = '${symptom}' AND s.trackable_value = ${severity}) `;
 	var insertSql = `INSERT INTO CheckIns(user_id, checkin_date, symptom, severity, feedback) VALUES ('${userid}', '${date}', '${symptom}', ${severity}, 'NULL')`;
 
 	if (symptom_two != '') {
-		sql += `OR (s.trackable_name = '${symptom_two}' AND s.trackable_value = ${severity_two}) `;
+		treatmentsql += `OR (s.trackable_name = '${symptom_two}' AND s.trackable_value = ${severity_two}) `;
+		conditionsql += `OR (s.trackable_name = '${symptom_two}' AND s.trackable_value = ${severity_two}) `;
 		insertSql += `, ('${userid}', '${date}', '${symptom_two}', ${severity_two}, 'NULL')`;
 	}
 	if (symptom_three != '') {
-		sql += `OR (s.trackable_name = '${symptom_three}' AND s.trackable_value = ${severity_three}) `;
+		treatmentsql += `OR (s.trackable_name = '${symptom_three}' AND s.trackable_value = ${severity_three}) `;
+		conditionsql += `OR (s.trackable_name = '${symptom_three}' AND s.trackable_value = ${severity_three}) `;
 		insertSql += `, ('${userid}', '${date}', '${symptom_three}', ${severity_three}, 'NULL')`;
 	}
 	if (symptom_four != '') {
-		sql += `OR (s.trackable_name = '${symptom_four}' AND s.trackable_value = ${severity_four}) `;
+		treatmentsql += `OR (s.trackable_name = '${symptom_four}' AND s.trackable_value = ${severity_four}) `;
+		conditionsql += `OR (s.trackable_name = '${symptom_four}' AND s.trackable_value = ${severity_four}) `;
 		insertSql += `, ('${userid}', '${date}', '${symptom_four}', ${severity_four}, 'NULL')`;
 	}
 	if (symptom_five != '') {
-		sql += `OR (s.trackable_name = '${symptom_five}' AND s.trackable_value = ${severity_five}) `;
+		treatmentsql += `OR (s.trackable_name = '${symptom_five}' AND s.trackable_value = ${severity_five}) `;
+		conditionsql += `OR (s.trackable_name = '${symptom_five}' AND s.trackable_value = ${severity_five}) `;
 		insertSql += `, ('${userid}', '${date}', '${symptom_five}', ${severity_five}, 'NULL')`;
 	}
 	
-	sql += `) GROUP BY treatments ORDER BY treatmentCount DESC LIMIT 15`;
-	
-	
+	treatmentsql += `) GROUP BY treatments ORDER BY treatmentCount DESC LIMIT 15`;
+	conditionsql += `) GROUP BY conditions ORDER BY conditionCount DESC LIMIT 15`;
+	var sql = `(SELECT treatments, treatmentCount, conditions, conditionCount FROM (` + treatmentsql + `) AS treatmentSubquery LEFT JOIN (` + conditionsql + `) AS conditionSubquery  ON 1 = 0) UNION ALL (SELECT treatments, treatmentCount, conditions, conditionCount FROM (` + treatmentsql + `) AS treatmentSubquery RIGHT JOIN (` + conditionsql + `) AS conditionSubquery ON 1 = 0)`;
+
+
 	connection.query(insertSql, function(err, result) {
 	  if (err) {
 	    res.send(err);

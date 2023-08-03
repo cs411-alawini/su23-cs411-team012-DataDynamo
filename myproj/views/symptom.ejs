@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>Symptom Tracker</title>
-    <h1 style="text-align:center;">Mediguide: Treatment Recommender</h1>	
+    <h1 style="text-align:center; font-size: 48px; font-weight: bold;">Mediguide: Treatment Recommender</h1>	
     <link rel="stylesheet" href="symptom.css">
 <style>
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Verdana, sans-serif;
   background-color: #8AAAE5;		
 }
 
@@ -29,16 +29,25 @@ body {
 }
 
 .button {
-  margin-top: 10px;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 10px;
-  background-color: #8AAAE5;
-  color: #FFFFFF;
-  font-size: 16px;
-  cursor: pointer;
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    text-align: center;
+    border: 0;
+    padding: 7px 16px;
+    min-height: 36px;
+    min-width: 36px;
+    color: #ffffff;
+    background: #008060;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
 }
 
+.button:hover {
+    background: #006e52;
+}
 
 .update {
   display: flex;
@@ -85,39 +94,48 @@ input[type="number"] {
                 <button type="submit" name="update_profile">Update Profile</button>
             </div>
           </form>
-        </div> 	
+        </div>	
 
       <form action="reading" method="post">
         <div class="symptom-form">			 
 	
          <span>
-   		 <input type="text" id="symptomInput" placeholder="Enter symptom" name="symptomInput">
-   		 <input type="number" min = "0" max = "4" placeholder="Enter Severity Score from 0-4" id="severityInput" name="severityInput">
+		 <input type="text" id="symptomInput" placeholder="Enter symptom" name="symptomInput">
+		 <input type="number" min = "0" max = "4" placeholder="Enter Severity Score from 0-4" id="severityInput" name="severityInput">
 	</span>
 	<br>
 	<span>
-    		<input type="text" id="symptomInputTwo" placeholder="Enter symptom 2" name="symptomInputTwo">
-    		<input type="number"  min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputTwo" name="severityInputTwo" >
+		<input type="text" id="symptomInputTwo" placeholder="Enter symptom 2" name="symptomInputTwo">
+		<input type="number"  min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputTwo" name="severityInputTwo" >
 	</span>
 	<br>
 	<span>
-    		<input type="text" id="symptomInputThree" placeholder="Enter symptom 3" name="symptomInputThree" >
-    		<input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputThree" name="severityInputThree" >
+		<input type="text" id="symptomInputThree" placeholder="Enter symptom 3" name="symptomInputThree" >
+		<input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputThree" name="severityInputThree" >
 	</span>
 	<br>
 	<span>
-    		<input type="text" id="symptomInputFour" placeholder="Enter symptom 4" name="symptomInputFour" >
-    		<input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputFour" name="severityInputFour" >
+		<input type="text" id="symptomInputFour" placeholder="Enter symptom 4" name="symptomInputFour" >
+		<input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputFour" name="severityInputFour" >
 	</span>
 	<br>
 	<span>
-   		 <input type="text" id="symptomInputFive" placeholder="Enter symptom 5" name="symptomInputFive" >
-   		 <input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputFive" name="severityInputFive" >
+		 <input type="text" id="symptomInputFive" placeholder="Enter symptom 5" name="symptomInputFive" >
+		 <input type="number" min="0" max="4" placeholder="Enter Severity Score from 0-4" id="severityInputFive" name="severityInputFive" >
 	</span>
 	 <br>
-	 <input style="align-items:center;" type="text" id="checkinDateInput" placeholder="Enter Date in this format: xx-xx-xxxx" name="checkinDateInput" required>
-         <br>
-   	 <br> 	
+	 <input style="align-items:center;" type="text" id="checkinDateInput" name="checkinDateInput" required readonly>
+	<script>
+	const checkinDateInput = document.getElementById("checkinDateInput");
+	const currentDate = new Date();
+	const day = String(currentDate.getDate()).padStart(2, "0");
+	const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+	const year = currentDate.getFullYear();
+	checkinDateInput.value = `${month}-${day}-${year}`;
+	</script>
+ 
+	<br>
+	 <br>	
             </div>
         </div>
      
@@ -125,10 +143,10 @@ input[type="number"] {
     <div class = "container">
         <div id="checkbox-container" class="checkbox-container">
                 <input style="align-items:center;" type="checkbox" id="conditionCheckbox" name="conditionCheckbox">
-                <label for="conditionCheckbox">Condition</label>
+                <label for="conditionCheckbox">Conditions for Nausea and Fatigue</label>
                 <br>
                 <input style="align-items:center;" type="checkbox" id="treatmentCheckbox" name="treatmentCheckbox">
-                <label for="treatmentCheckbox">Treatment</label>
+                <label for="treatmentCheckbox">Treatments for Headache</label>
         </div>
             <button style="align-items:center;" type="submit" name="results">Submit</button>
 
@@ -141,8 +159,8 @@ input[type="number"] {
                  <input type="text" placeholder="Enter Check-in Date for deletion in this format: xx-xx-xxxx" id="checkindateDeleteInput" name="checkindateDeleteInput" required>
 		<input style="align-items:center;"  type="number" min="0" max="4" placeholder="Enter Severity value for deletion" id="severityDeleteInput" name="severityDeleteInput" required>
 		 <div class="delete">
-       			 <button type="submit" name="delete_Checkin">Delete Checkin</button>
-      		</div>
+			 <button type="submit" name="delete_Checkin">Delete Checkin</button>
+		</div>
      </span>	
     </form>
    </div>	
